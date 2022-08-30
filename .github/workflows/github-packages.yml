@@ -1,0 +1,34 @@
+# This workflow will build a package using Gradle and then publish it to GitHub
+# packages when a release is published
+
+name: Github Packages
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        server-id: github
+        settings-path: ${{ github.workspace }}
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    - name: Publish to GitHub Packages
+      run: >-
+        ./gradlew publish -PmavenReleaseRepoUrl="https://maven.pkg.github.com/css4j/carte"
+        -PmavenRepoUsername=${{ github.actor }} -PmavenRepoPassword=${{ secrets.GITHUB_TOKEN }}

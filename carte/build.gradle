@@ -1,0 +1,19 @@
+plugins {
+	id 'io.sf.carte.java-conventions'
+}
+
+description = 'Carte'
+
+dependencies {
+	implementation "io.sf.carte:echosvg-transcoder:${echosvgVersion}"
+	jfreechartImplementation "org.jfree:jfreechart:${jfreechartVersion}"
+	xchartImplementation "org.knowm.xchart:xchart:${xchartVersion}"
+	testImplementation "junit:junit:${junitVersion}"
+}
+
+extraJavaModuleInfo {
+	automaticModule('xml-apis:xml-apis', 'xml.apis')
+	automaticModule('org.hamcrest:hamcrest-core', 'hamcrest.core')
+}
+
+sourceSets.main.resources.srcDirs = ['resources']

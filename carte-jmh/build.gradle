@@ -1,0 +1,45 @@
+plugins {
+	id 'io.sf.carte.java-conventions'
+}
+
+description = 'Carte JMH charts'
+
+dependencies {
+	api project(':carte')
+	api "io.sf.jclf:jclf-core:${jclfVersion}"
+	api "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+	jfreechartImplementation "org.jfree:jfreechart:${jfreechartVersion}"
+	xchartImplementation "org.knowm.xchart:xchart:${xchartVersion}"
+}
+
+//create a single Jar with all dependencies
+tasks.register('uberjar', Jar) {
+	archiveClassifier = "all"
+	manifest {
+		attributes(
+			'Main-Class' : 'io.sf.carte.report.jmh.BenchmarkChartWriter'
+		)
+	}
+	from sourceSets.main.output
+	dependsOn ':carte:jar'
+	dependsOn tasks.classes
+	dependsOn configurations.compileClasspath
+	dependsOn configurations.runtimeClasspath
+	mustRunAfter ':carte:jar'
+	mustRunAfter tasks.classes
+	doFirst {
+		from {
+			configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+		from {
+			configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+		}
+	}
+	with jar
+	duplicatesStrategy = 'exclude'
+	exclude 'org/w3c/css/**'
+	exclude 'module-info.class'
+	exclude 'LICENSE.txt'
+	exclude 'META-INF/LICENSE'
+	exclude 'META-INF/NOTICE'
+}

@@ -1,0 +1,48 @@
+# Build workflow
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  # Validate wrapper to prevent potential supply chain attack
+  gradle-wrapper-validation:
+    runs-on: ubuntu-latest
+
+    name: Validate Gradle wrapper
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: gradle/wrapper-validation-action@v1
+
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java: [ '11', '17' ]
+
+    name: Java ${{ matrix.Java }} build
+
+    steps:
+      # Checks-out the repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v3
+
+      # Set JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+
+      # Build
+      - name: Build with Gradle
+        run: ./gradlew build

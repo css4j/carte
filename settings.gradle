@@ -1,0 +1,4 @@
+rootProject.name = 'carte-dist'
+
+include(':carte-jmh')
+include(':carte')

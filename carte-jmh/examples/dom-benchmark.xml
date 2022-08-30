@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Configuration file for automated chart generation from JMH JSON files -->
+<reportdef id="dom-mark" xmlns="http://carte.sourceforge.io/report">
+	<name>DOM benchmarks</name>
+	<methods>
+		<method regex=".+Css4jDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+		<method regex=".+DOM$" color="#61c061">Css4j DOM</method>
+		<method regex=".+DOM4J$" color="#4d4dc0">DOM4J</method>
+		<method regex=".+BuildJdk$" color="#c04dc0">
+			<tspan>JDK</tspan> <tspan style="font-size:smaller">(css4j builder)</tspan>
+		</method>
+		<method regex=".+J[Dd][Kk]$" color="#c0c061">JDK</method>
+		<method regex=".+Jsoup$" color="#b0d0d0">Jsoup</method>
+	</methods>
+	<units>
+		<unit-title unit-id="ops/s">Throughput (ops/s)</unit-title>
+		<unit-title unit-id="ops/ms">Throughput (ops/ms)</unit-title>
+		<unit-title unit-id="ops/us">Throughput (ops/μs)</unit-title>
+		<unit-title unit-id="ops/ns">Throughput (ops/ns)</unit-title>
+		<unit-title unit-id="s/op">Average time per operation (s)</unit-title>
+		<unit-title unit-id="ms/op">Average time per operation (ms)</unit-title>
+		<unit-title unit-id="us/op">Average time per operation (μs)</unit-title>
+		<unit-title unit-id="ns/op">Average time per operation (ns)</unit-title>
+	</units>
+	<x-axis-title>DOM Implementation</x-axis-title>
+	<storage>
+		<store id="fileStore" classname="io.sf.carte.report.FileStore">
+			<directory>${java.io.tmpdir}/benchmark</directory>
+		</store>
+		<store id="documentStore" classname="io.sf.carte.report.DocumentStore">
+			<pathname>${user.home}/www/css4j.github.io/dom-mark.html</pathname>
+			<fallback baseuri="benchmark" format="png">
+				${user.home}/www/css4j.github.io/benchmark
+			</fallback>
+		</store>
+	</storage>
+	<reportset basedir="templates">
+		<report>
+			<renderer>io.sf.carte.chart.SVGBarChartRenderer</renderer>
+			<!-- <template>barchart.svg</template> -->
+			<store-id>fileStore</store-id>
+			<store-id>documentStore</store-id>
+		</report>
+		<report>
+			<renderer>io.sf.carte.chart.external.XChartRenderer</renderer>
+		</report>
+	</reportset>
+	<benchmark id="html-build">
+		<class>io.sf.carte.mark.dom.HTMLBuildBenchmark</class>
+		<methods>
+			<method regex="markBuildDOMXHTMLBuilder$" color="#c04dc0">
+				<tspan>Css4j DOM</tspan> <tspan style="font-size:smaller">(own builder)</tspan>
+			</method>
+		</methods>
+		<caption>HTML build benchmark</caption>
+		<subcaption>38 KB html file, validator.nu parser (except Jsoup)</subcaption>
+	</benchmark>
+	<benchmark id="xml-build">
+		<class>io.sf.carte.mark.dom.XMLBuildBenchmark</class>
+		<caption>XML build benchmark</caption>
+		<subcaption>1MB file</subcaption>
+		<x-axis-title>DOM Implementation</x-axis-title>
+	</benchmark>
+	<benchmark id="xml-build-small">
+		<class>io.sf.carte.mark.dom.XMLBuildSmallBenchmark</class>
+		<caption>XML build benchmark</caption>
+		<subcaption>38kB file</subcaption>
+	</benchmark>
+	<benchmark id="traversal-next">
+		<class>io.sf.carte.mark.dom.DOMSiblingTraversalMark</class>
+		<methods>
+			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$</include>
+			<method regex="markTraverseDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markTraverseDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markTraverseJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM Traversal: NextSibling</caption>
+		<subcaption>1MB file traversed by getFirstChild()/getNextSibling()</subcaption>
+	</benchmark>
+	<benchmark id="traversal-prev">
+		<class>io.sf.carte.mark.dom.DOMSiblingTraversalMark</class>
+		<methods>
+			<include>markTraversePrev.+</include>
+			<method regex="markTraversePrevDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markTraversePrevDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markTraversePrevJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM Traversal: PreviousSibling</caption>
+		<subcaption>1MB file traversed by getLastChild()/getPreviousSibling()</subcaption>
+	</benchmark>
+	<benchmark id="traversal-small-next">
+		<class>io.sf.carte.mark.dom.DOMSiblingTraversalSmallMark</class>
+		<methods>
+			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$</include>
+			<method regex="markTraverseDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markTraverseDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markTraverseJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM Traversal: NextSibling (small file)</caption>
+		<subcaption>38kB file traversed by getFirstChild()/getNextSibling()</subcaption>
+	</benchmark>
+	<benchmark id="traversal-prev">
+		<class>io.sf.carte.mark.dom.DOMSiblingTraversalSmallMark</class>
+		<methods>
+			<include>markTraversePrev.+</include>
+			<method regex="markTraversePrevDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markTraversePrevDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markTraversePrevJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM Traversal: PreviousSibling (small file)</caption>
+		<subcaption>38kB file traversed by getLastChild()/getPreviousSibling()</subcaption>
+	</benchmark>
+	<benchmark id="nodeiterator">
+		<class>io.sf.carte.mark.dom.DOMTraversalMark</class>
+		<methods>
+			<include>markNodeIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: NodeIterator</caption>
+		<subcaption>1MB file traversed by NodeIterator</subcaption>
+	</benchmark>
+	<benchmark id="treewalker">
+		<class>io.sf.carte.mark.dom.DOMTraversalMark</class>
+		<methods>
+			<include>markTreeWalker.+</include>
+		</methods>
+		<caption>DOM Traversal: TreeWalker</caption>
+		<subcaption>1MB file traversed by TreeWalker</subcaption>
+	</benchmark>
+	<benchmark id="nodeiterator-small">
+		<class>io.sf.carte.mark.dom.DOMTraversalSmallMark</class>
+		<methods>
+			<include>markNodeIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: NodeIterator (small file)</caption>
+		<subcaption>38kB file traversed by NodeIterator</subcaption>
+	</benchmark>
+	<benchmark id="treewalker-small">
+		<class>io.sf.carte.mark.dom.DOMTraversalSmallMark</class>
+		<methods>
+			<include>markTreeWalker.+</include>
+		</methods>
+		<caption>DOM Traversal: TreeWalker (small file)</caption>
+		<subcaption>38kB file traversed by TreeWalker</subcaption>
+	</benchmark>
+	<benchmark id="iterator">
+		<class>io.sf.carte.mark.dom.DOMIteratorMark</class>
+		<methods>
+			<include>markIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: child node iterators</caption>
+		<subcaption>1MB file traversed by child iterators</subcaption>
+	</benchmark>
+	<benchmark id="element-iterator">
+		<class>io.sf.carte.mark.dom.DOMIteratorMark</class>
+		<methods>
+			<include>markElementIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: element iterators</caption>
+		<subcaption>1MB file traversed by elementIterator()</subcaption>
+	</benchmark>
+	<benchmark id="iterator-small">
+		<class>io.sf.carte.mark.dom.DOMIteratorSmallMark</class>
+		<methods>
+			<include>markIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: child node iterators (small file)</caption>
+		<subcaption>38kB file traversed by child iterators</subcaption>
+	</benchmark>
+	<benchmark id="element-iterator-small">
+		<class>io.sf.carte.mark.dom.DOMIteratorSmallMark</class>
+		<methods>
+			<include>markElementIterator.+</include>
+		</methods>
+		<caption>DOM Traversal: element iterators (small file)</caption>
+		<subcaption>38kB file traversed by elementIterator()</subcaption>
+	</benchmark>
+	<benchmark id="elements-by-tagname">
+		<class>io.sf.carte.mark.dom.DOMElementsByTagNameMark</class>
+		<methods>
+			<include>markElementsByTagName.+</include>
+			<method regex="markElementsByTagNameDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markElementsByTagNameDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markElementsByTagNameDOMit$" color="#c04dc0">
+				<tspan>Css4j DOM</tspan> <tspan style="font-size:smaller">(iterator)</tspan>
+			</method>
+			<method regex="markElementsByTagNameJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM getElementsByTagName()</caption>
+		<subcaption>Traverse 3152 elements given by getElementsByTagName()</subcaption>
+	</benchmark>
+	<benchmark id="elements-by-tagname-small">
+		<class>io.sf.carte.mark.dom.DOMElementsByTagNameSmallMark</class>
+		<methods>
+			<include>markElementsByTagName.+</include>
+			<method regex="markElementsByTagNameDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markElementsByTagNameDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markElementsByTagNameDOMit$" color="#c04dc0">
+				<tspan>Css4j DOM</tspan> <tspan style="font-size:smaller">(iterator)</tspan>
+			</method>
+			<method regex="markElementsByTagNameJdk$" color="#c0c061">JDK</method>
+			<method regex="markElementsByTagNameJsoupIt$" color="#a57b34">
+				<tspan>Jsoup</tspan> <tspan style="font-size:smaller">(iterator)</tspan>
+			</method>
+		</methods>
+		<caption>DOM getElementsByTagName() (small file)</caption>
+		<subcaption>Traverse 713 elements given by getElementsByTagName()</subcaption>
+	</benchmark>
+	<benchmark id="dom-change">
+		<class>io.sf.carte.mark.dom.DOMChangeMark</class>
+		<methods>
+			<method regex="markChangeDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
+			<method regex="markChangeDOM$" color="#61c061">Css4j DOM</method>
+			<method regex="markChangeJdk$" color="#c0c061">JDK</method>
+		</methods>
+		<caption>DOM document modification</caption>
+		<subcaption>appendChild()/removeChild()</subcaption>
+	</benchmark>
+</reportdef>
