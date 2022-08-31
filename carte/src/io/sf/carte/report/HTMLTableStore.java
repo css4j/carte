@@ -27,6 +27,28 @@ import io.sf.carte.doc.dom.DOMNode;
 
 /**
  * Stores data into an HTML table.
+ * 
+ * <p>
+ * In the XML configuration file, you can use an optional {@code <css-classes>}
+ * element where you tell which {@code class} attribute the numbers and units
+ * will have (by default, {@code number} for numbers and no class for units).
+ * </p>
+ * 
+ * <pre>
+ * &lt;css-classes&gt;
+ *     &lt;number&gt;numberclass&lt;/number&gt;
+ *     &lt;unit&gt;unitclass&lt;/unit&gt;
+ * &lt;/css-classes&gt;
+ * </pre>
+ * 
+ * <p>
+ * Then, it will retrieve all the HTML tables where the
+ * <code>&lt;table&gt;</code> elements have a {@code carteitem} class, and then
+ * replace its contents with the report data.
+ * </p>
+ * <p>
+ * See {@link DocumentStore}.
+ * </p>
  * <p>
  * WARNING: This code is nowhere near being complete nor API-stable. Use it at
  * your own risk, and contributions would be welcome.

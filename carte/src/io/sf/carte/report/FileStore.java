@@ -23,6 +23,20 @@ import io.sf.carte.doc.dom.DOMDocument;
 import io.sf.carte.doc.dom.DOMElement;
 
 /**
+ * Stores charts in a directory.
+ * <p>
+ * In the following example, the store will be the {@code $TMP/chart_dir}
+ * directory:
+ * </p>
+ * 
+ * <pre>
+ *  &lt;storage&gt;
+ *      &lt;store id="fileStore" classname="io.sf.carte.report.FileStore"&gt;
+ *          &lt;directory&gt;${java.io.tmpdir}/chart_dir&lt;/directory&gt;
+ *      &lt;/store&gt;
+ *  &lt;/storage&gt;
+ * </pre>
+ * 
  * <p>
  * WARNING: This code is nowhere near being complete nor API-stable. Use it at
  * your own risk, and contributions would be welcome.

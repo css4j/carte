@@ -57,6 +57,34 @@ import nu.validator.htmlparser.common.XmlViolationPolicy;
 import nu.validator.htmlparser.sax.HtmlParser;
 
 /**
+ * Uses an HTML Document to "store" SVG charts.
+ * <p>
+ * In the XML configuration, the document specified by the {@code <pathname>}
+ * element (in the next example, {@code doc_store.html}) is the store, and the
+ * fallback images will be in the PNG {@code format}, stored at the
+ * {@code fallbackdir} directory which will be visible over HTTP with the uri
+ * {@code imagefallback} as given by the {@code baseuri} attribute (typically,
+ * {@code baseuri} will coincide with the last part of the {@code <fallback>}
+ * element contents).
+ * </p>
+ * 
+ * <pre>
+ *  &lt;storage&gt;
+ *      &lt;store id="documentStore" classname="io.sf.carte.report.DocumentStore"&gt;
+ *          &lt;pathname&gt;${user.home}/path/to/doc_store.html&lt;/pathname&gt;
+ *          &lt;fallback baseuri="imagefallback" format="png"&gt;
+ *             ${user.home}/path/to/fallbackdir
+ *          &lt;/fallback&gt;
+ *      &lt;/store&gt;
+ *  &lt;/storage&gt;
+ * </pre>
+ * 
+ * <p>
+ * It also uses a {@link HTMLTableStore} to look for HTML tables in the document
+ * (the <code>&lt;table&gt;</code> elements have to use the {@code carteitem}
+ * class).
+ * </p>
+ * 
  * <p>
  * WARNING: This code is nowhere near being complete nor API-stable. Use it at
  * your own risk, and contributions would be welcome.
