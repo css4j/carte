@@ -5,6 +5,9 @@ HTML reports and SVG-based charts.
 *WARNING: This code is nowhere near being complete nor API-stable.
 Use it at your own risk, and contributions would be welcome.*
 
+This file focuses on building Carte from source. You can find more information
+about Carte in the [Wiki](https://github.com/css4j/carte/wiki).
+
 <br/>
 
 ## Building the main modules from source
