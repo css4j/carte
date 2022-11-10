@@ -165,9 +165,9 @@ tasks.named('clean') {
 	finalizedBy('cleanBuildSrc')
 }
 
-tasks.register('lineEndingConversion', CRLFConvert) {
+tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
 	description 'Convert LICENSE.txt to Windows line endings'
-	file "$rootDir/LICENSE.txt"
+	from "$rootDir/LICENSE.txt"
 }
 
 tasks.withType(AbstractArchiveTask).configureEach {
@@ -175,8 +175,8 @@ tasks.withType(AbstractArchiveTask).configureEach {
 	preserveFileTimestamps = false
 	reproducibleFileOrder = true
 	// Copy license file
-	dependsOn lineEndingConversion
-	from ("$rootDir/LICENSE.txt") {
+	dependsOn lineEndingConvCopy
+	from ("$buildDir/tmp/crlf/LICENSE.txt") {
 		into 'META-INF'
 	}
 }
