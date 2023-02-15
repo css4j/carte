@@ -8,7 +8,11 @@ dependencies {
 	implementation "io.sf.carte:echosvg-transcoder:${echosvgVersion}"
 	jfreechartImplementation "org.jfree:jfreechart:${jfreechartVersion}"
 	xchartImplementation "org.knowm.xchart:xchart:${xchartVersion}"
-	testImplementation "junit:junit:${junitVersion}"
+	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+}
+
+test {
+	useJUnitPlatform()
 }
 
 extraJavaModuleInfo {
