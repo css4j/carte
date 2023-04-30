@@ -9,6 +9,13 @@
 
  */
 
+/**
+ * Core module of the Carte report engine.
+ * <p>
+ * WARNING: This code is nowhere near being complete nor API-stable. Use it at
+ * your own risk, and contributions would be welcome.
+ * </p>
+ */
 module io.sf.carte.report {
 	exports io.sf.carte.chart;
 	exports io.sf.carte.chart.external;
