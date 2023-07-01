@@ -9,6 +9,7 @@ dependencies {
 	jfreechartImplementation "org.jfree:jfreechart:${jfreechartVersion}"
 	xchartImplementation "org.knowm.xchart:xchart:${xchartVersion}"
 	testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
