@@ -66,7 +66,6 @@ dependencies {
 extraJavaModuleInfo {
 	automaticModule("htmlparser-${htmlparserVersion}.jar", 'htmlparser')
 	automaticModule('com.madgag:animated-gif-lib', 'com.madgag.gif.fmsware')
-	automaticModule('commons-io:commons-io', 'commons.io')
 	automaticModule('commons-logging:commons-logging', 'commons.logging')
 	automaticModule("org.apache.xmlgraphics:xmlgraphics-commons", 'xmlgraphics.commons')
 	automaticModule('de.erichseifert.vectorgraphics2d:VectorGraphics2D', 'vectorgraphics2d')
