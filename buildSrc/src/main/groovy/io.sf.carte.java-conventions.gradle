@@ -152,17 +152,6 @@ tasks.withType(Javadoc) {
 	options.links 'https://docs.oracle.com/en/java/javase/11/docs/api/'
 }
 
-tasks.register('cleanBuildSrc') {
-	description = 'Clean the buildSrc directory'
-	doLast {
-		delete("$rootDir/buildSrc/build")
-	}
-}
-
-tasks.named('clean') {
-	finalizedBy('cleanBuildSrc')
-}
-
 tasks.register('lineEndingConvCopy', CRLFConvertCopy) {
 	description 'Convert LICENSE.txt to Windows line endings'
 	from "$rootDir/LICENSE.txt"

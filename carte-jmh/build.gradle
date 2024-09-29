@@ -12,6 +12,17 @@ dependencies {
 	xchartImplementation "org.knowm.xchart:xchart:${xchartVersion}"
 }
 
+tasks.register('cleanBuildSrc') {
+	description = 'Clean the buildSrc directory'
+	doLast {
+		delete("$rootDir/buildSrc/build")
+	}
+}
+
+tasks.named('clean') {
+	finalizedBy('cleanBuildSrc')
+}
+
 //create a single Jar with all dependencies
 tasks.register('uberjar', Jar) {
 	archiveClassifier = "all"
