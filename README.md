@@ -41,14 +41,18 @@ your build file, for easy access to dependencies:
 ```groovy
 repositories {
     maven {
-        url "https://css4j.github.io/maven/"
+        url = "https://css4j.github.io/maven/"
         mavenContent {
             releasesOnly()
         }
         content {
-            includeGroup 'io.sf.carte'
-            includeGroup 'io.sf.jclf'
-            includeGroup 'com.github.css4j'
+            includeGroupByRegex 'io\\.sf\\..*'
+
+            // Alternative to the regex:
+            //includeGroup 'io.sf.carte'
+            //includeGroup 'io.sf.jclf'
+            //includeGroup 'io.sf.graphics'
+            //includeGroup 'io.sf.w3'
        }
     }
 }
