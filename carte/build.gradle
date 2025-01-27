@@ -16,9 +16,4 @@ test {
 	useJUnitPlatform()
 }
 
-extraJavaModuleInfo {
-	automaticModule('xml-apis:xml-apis', 'xml.apis')
-	automaticModule('org.hamcrest:hamcrest-core', 'org.hamcrest.core.deprecated')
-}
-
 sourceSets.main.resources.srcDirs = ['resources']
