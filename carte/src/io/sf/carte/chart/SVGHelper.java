@@ -20,13 +20,12 @@ import org.w3c.dom.Node;
 import io.sf.carte.doc.dom.DOMElement;
 import io.sf.carte.doc.dom.DOMNode;
 import io.sf.carte.doc.geom.Rect;
+import io.sf.carte.doc.style.css.CSSExpressionValue;
 import io.sf.carte.doc.style.css.CSSTypedValue;
 import io.sf.carte.doc.style.css.CSSUnit;
 import io.sf.carte.doc.style.css.CSSValue;
 import io.sf.carte.doc.style.css.nsac.Parser;
-import io.sf.carte.doc.style.css.property.ExpressionValue;
 import io.sf.carte.doc.style.css.property.StyleValue;
-import io.sf.carte.doc.style.css.property.TypedValue;
 import io.sf.carte.doc.style.css.property.ValueFactory;
 
 class SVGHelper {
@@ -85,9 +84,9 @@ class SVGHelper {
 		CSSValue.Type pType = cssValue.getPrimitiveType();
 		if (pType == CSSValue.Type.EXPRESSION) {
 			SVGEvaluator evaluator = new SVGEvaluator(viewportPx);
-			TypedValue typed;
+			CSSTypedValue typed;
 			try {
-				typed = evaluator.evaluateExpression((ExpressionValue) cssValue);
+				typed = evaluator.evaluateExpression((CSSExpressionValue) cssValue);
 			} catch (DOMException e) {
 				throw new ChartTemplateException("Invalid value: " + value, e);
 			}
