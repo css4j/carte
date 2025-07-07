@@ -13,7 +13,7 @@ package io.sf.carte.chart;
 
 import org.w3c.dom.DOMException;
 
-import io.sf.carte.doc.style.css.CSSTypedValue;
+import io.sf.carte.doc.style.css.CSSNumberValue;
 import io.sf.carte.doc.style.css.property.PercentageEvaluator;
 
 class SVGEvaluator extends PercentageEvaluator {
@@ -26,7 +26,7 @@ class SVGEvaluator extends PercentageEvaluator {
 	}
 
 	@Override
-	protected float percentage(CSSTypedValue value, short resultType) throws DOMException {
+	protected float percentage(CSSNumberValue value, short resultType) throws DOMException {
 		return value.getFloatValue(resultType) * (float) viewportPx;
 	}
 
