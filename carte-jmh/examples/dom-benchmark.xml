@@ -69,7 +69,7 @@
 	<benchmark id="traversal-next">
 		<class>io.sf.carte.mark.dom.DOMSiblingTraversalMark</class>
 		<methods>
-			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$</include>
+			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$,markTraverseJsoup$</include>
 			<method regex="markTraverseDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
 			<method regex="markTraverseDOM$" color="#61c061">Css4j DOM</method>
 			<method regex="markTraverseJdk$" color="#c0c061">JDK</method>
@@ -91,7 +91,7 @@
 	<benchmark id="traversal-small-next">
 		<class>io.sf.carte.mark.dom.DOMSiblingTraversalSmallMark</class>
 		<methods>
-			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$</include>
+			<include>markTraverseDOM4J$,markTraverseDOM$,markTraverseJdk$,markTraverseJsoup$</include>
 			<method regex="markTraverseDOM4J$" color="#c04d4d">Css4j-DOM4J</method>
 			<method regex="markTraverseDOM$" color="#61c061">Css4j DOM</method>
 			<method regex="markTraverseJdk$" color="#c0c061">JDK</method>
@@ -99,7 +99,7 @@
 		<caption>DOM Traversal: NextSibling (small file)</caption>
 		<subcaption>38kB file traversed by getFirstChild()/getNextSibling()</subcaption>
 	</benchmark>
-	<benchmark id="traversal-prev">
+	<benchmark id="traversal-small-prev">
 		<class>io.sf.carte.mark.dom.DOMSiblingTraversalSmallMark</class>
 		<methods>
 			<include>markTraversePrev.+</include>
@@ -184,6 +184,10 @@
 				<tspan>Css4j DOM</tspan> <tspan style="font-size:smaller">(iterator)</tspan>
 			</method>
 			<method regex="markElementsByTagNameJdk$" color="#c0c061">JDK</method>
+			<method regex="markElementsByTagNameJsoup$" color="#a59034">Jsoup</method>
+			<method regex="markElementsByTagNameJsoupIt$" color="#a57b34">
+				<tspan>Jsoup</tspan> <tspan style="font-size:smaller">(iterator)</tspan>
+			</method>
 		</methods>
 		<caption>DOM getElementsByTagName()</caption>
 		<subcaption>Traverse 3152 elements given by getElementsByTagName()</subcaption>
