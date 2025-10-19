@@ -85,11 +85,13 @@ a configuration file and execute:
 1) `./gradlew build uberjar`
 2) `java -jar carte-jmh/build/libs/carte-jmh-<version>-all.jar --config=<path-to-config-file> *.json`
 
-You could use the `example` files as a starting point, and run the
-`benchmark-charts.sh` script that produces the graphs in
-https://css4j.github.io/dom-mark.html.
+You could use the `example` files as a starting point and run any of the
+`*-benchmark-charts.sh` scripts that produces the graphs in
 
-Look inside the `dom-benchmark.xml` file:
+https://css4j.github.io/dom-mark.html
+https://css4j.github.io/svg-mark.html
+
+For example, for the DOM benchmarks look inside the `dom-benchmark.xml` file:
 
 - In the element with `documentStore` id of that file, it is configured that the
 file `~/www/css4j.github.io/dom-mark.html` is a `DocumentStore` where the SVG
@@ -104,7 +106,7 @@ modify the paths in `dom-benchmark.xml` as necessary. Then:
 
 ```shell
 cd carte-jmh/examples
-./benchmark-charts.sh dom-*.json html-build.json iterator*.json xml*.json ele*.json
+./dom-benchmark-charts.sh dom-*.json
 ```
 
-And you will reproduce the JMH charts.
+And you shall reproduce the JMH charts.

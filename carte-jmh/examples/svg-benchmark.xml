@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Configuration file for automated chart generation from JMH JSON files -->
+<reportdef id="sac-mark" xmlns="http://carte.sourceforge.io/report">
+	<name>SAC benchmarks</name>
+	<methods>
+		<method regex=".+Batik$" color="#61c061">Batik</method>
+	</methods>
+	<units>
+		<unit-title unit-id="ops/s">Throughput (ops/s)</unit-title>
+		<unit-title unit-id="ops/ms">Throughput (ops/ms)</unit-title>
+		<unit-title unit-id="ops/us">Throughput (ops/μs)</unit-title>
+		<unit-title unit-id="ops/ns">Throughput (ops/ns)</unit-title>
+		<unit-title unit-id="s/op">Average time per operation (s)</unit-title>
+		<unit-title unit-id="ms/op">Average time per operation (ms)</unit-title>
+		<unit-title unit-id="us/op">Average time per operation (μs)</unit-title>
+		<unit-title unit-id="ns/op">Average time per operation (ns)</unit-title>
+	</units>
+	<x-axis-title>SVG Implementation</x-axis-title>
+	<storage>
+		<store id="fileStore" classname="io.sf.carte.report.FileStore">
+			<directory>${java.io.tmpdir}/benchmark</directory>
+		</store>
+		<store id="documentStore" classname="io.sf.carte.report.DocumentStore">
+			<pathname>${user.home}/www/css4j.github.io/svg-mark.html</pathname>
+			<fallback baseuri="benchmark" format="png">
+				${user.home}/www/css4j.github.io/benchmark
+			</fallback>
+		</store>
+	</storage>
+	<reportset basedir="templates">
+		<report>
+			<renderer>io.sf.carte.chart.SVGBarChartRenderer</renderer>
+			<!-- <template>barchart.svg</template> -->
+			<store-id>fileStore</store-id>
+			<store-id>documentStore</store-id>
+		</report>
+		<report>
+			<renderer>io.sf.carte.chart.external.XChartRenderer</renderer>
+		</report>
+	</reportset>
+	<benchmark id="svg-issue91">
+		<class>io.sf.carte.mark.svg.Issue91Mark</class>
+		<methods>
+			<method regex="markIssue91$" color="#c04d4d">EchoSVG</method>
+		</methods>
+		<caption>Issue 91</caption>
+		<subcaption>Medium-sized file (596 kB)</subcaption>
+	</benchmark>
+	<benchmark id="svg-pooh3">
+		<class>io.sf.carte.mark.svg.Pooh3Mark</class>
+		<methods>
+			<method regex="markPooh3$" color="#c04d4d">EchoSVG</method>
+		</methods>
+		<caption>Pooh 3</caption>
+		<subcaption>Small-sized file (61 kB) with paths</subcaption>
+	</benchmark>
+	<benchmark id="svg-multiple-use">
+		<class>io.sf.carte.mark.svg.UseMultipleMark</class>
+		<methods>
+			<method regex="markUseMultiple$" color="#c04d4d">EchoSVG</method>
+		</methods>
+		<caption>Multiple &lt;use&gt;</caption>
+		<subcaption>Very small file (4.5 kB)</subcaption>
+	</benchmark>
+	<benchmark id="svg-gen">
+		<class>io.sf.carte.mark.svg.SVGGraphics2DMark</class>
+		<methods>
+			<method regex="markSVGGraphics2D$" color="#c04d4d">EchoSVG</method>
+		</methods>
+		<caption>Graphics2D benchmark</caption>
+		<subcaption>Font decorations supported only by EchoSVG</subcaption>
+		<x-axis-title>SVG generator</x-axis-title>
+	</benchmark>
+</reportdef>
