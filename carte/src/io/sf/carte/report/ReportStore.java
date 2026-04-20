@@ -39,8 +39,8 @@ public interface ReportStore {
 	 * 
 	 * @param chartInfo the chart information and data.
 	 * @param document  the document to store (or to store the data in).
-	 * @throws ReportException
-	 * @throws IOException
+	 * @throws ReportException if a non-IO problem was found.
+	 * @throws IOException if an IO problem was found.
 	 */
 	void store(ChartInfo chartInfo, DOMDocument document) throws ReportException, IOException;
 

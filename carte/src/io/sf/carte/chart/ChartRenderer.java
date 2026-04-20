@@ -23,6 +23,7 @@ import io.sf.carte.report.ReportStore;
  * WARNING: This code is nowhere near being complete nor API-stable. Use it at
  * your own risk, and contributions would be welcome.
  * </p>
+ *
  * @param <T> the type of chart metadata.
  */
 public interface ChartRenderer<T extends ChartInfo> {
