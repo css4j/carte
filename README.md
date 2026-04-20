@@ -1,6 +1,6 @@
 # Carte Report Engine
 
-HTML reports and SVG-based charts.
+HTML reports and SVG-based charts, running on Java 11 or later.
 
 *WARNING: This code is nowhere near being complete nor API-stable.
 Use it at your own risk, and contributions would be welcome.*

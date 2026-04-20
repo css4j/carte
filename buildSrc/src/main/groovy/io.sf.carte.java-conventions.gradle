@@ -79,45 +79,15 @@ extraJavaModuleInfo {
 	automaticModule('de.erichseifert.vectorgraphics2d:VectorGraphics2D', 'de.erichseifert.vectorgraphics2d')
 }
 
-tasks.register('jvmVersionAttribute') {
-	description = "Set the correct 'org.gradle.jvm.version' attribute"
-	dependsOn compileJava
-	def jvmVersionAttribute = Attribute.of('org.gradle.jvm.version', Integer)
-	configurations.each {
-		if (it.canBeConsumed) {
-			def categoryAttr = it.attributes.getAttribute(Category.CATEGORY_ATTRIBUTE)
-			if (categoryAttr != null && categoryAttr.name == Category.LIBRARY) {
-				def usageAttr = it.attributes.getAttribute(Usage.USAGE_ATTRIBUTE)
-				if (usageAttr != null && (usageAttr.name == Usage.JAVA_API
-						|| usageAttr.name == Usage.JAVA_RUNTIME)) {
-					it.attributes.attribute(jvmVersionAttribute, 8)
-				}
-			}
-		}
-	}
-}
-
-tasks.register('compileLegacyJava', JavaCompile) {
-	description = 'Compile to Java 8 bytecode, except module-info'
-	sourceCompatibility = JavaVersion.VERSION_1_8
-	targetCompatibility = JavaVersion.VERSION_1_8
-	source = sourceSets.main.java
+compileJava {
 	dependsOn configurations.compileClasspath
 	classpath = sourceSets.main.compileClasspath
-	destinationDirectory = sourceSets.main.java.destinationDirectory
-	modularity.inferModulePath = false
-	excludes = ['module-info.java']
-}
-
-compileJava {
-	includes = ['module-info.java']
-	dependsOn compileLegacyJava
-	classpath = sourceSets.main.compileClasspath
+	options.release = 11
 }
 
 // Check bytecode version, in case some other task screws it
-tasks.register('checkLegacyJava') {
-	description = 'Check Java 8 bytecode'
+tasks.register('checkBytecodeVersion') {
+	description = 'Check that classes are Java 11 bytecode'
 	enabled = enabled && !project.getPluginManager().hasPlugin('eclipse')
 	def classdir = sourceSets.main.output.classesDirs.files.stream().findAny().get()
 	def classfiles = fileTree(classdir).matching({it.exclude('module-info.class')}).files
@@ -129,16 +99,15 @@ tasks.register('checkLegacyJava') {
 				def bcversion = classbytes[6] * 128 + classbytes[7]
 				if (bcversion != 52) {
 					throw new GradleException("Bytecode on " + classfile +
-							" is not valid Java 8. Version should be 52, instead is " + bcversion)
+						" is not valid Java 11. Version should be 55, instead is " + bcversion)
 				}
 			}
 		}
 	}
 }
 
-classes.dependsOn jvmVersionAttribute
-classes.finalizedBy checkLegacyJava
-jar.dependsOn checkLegacyJava
+classes.finalizedBy checkBytecodeVersion
+jar.dependsOn checkBytecodeVersion
 
 publishing {
 	publications {
