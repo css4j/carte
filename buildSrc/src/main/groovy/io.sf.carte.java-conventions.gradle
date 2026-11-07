@@ -12,6 +12,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
+	id 'signing'
 	id 'org.gradlex.extra-java-module-info'
 }
 
@@ -30,6 +31,8 @@ repositories {
 
 group = 'io.sf.carte'
 version = '0.1.0-SNAPSHOT'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
 sourceSets {
 	main {
@@ -111,7 +114,57 @@ publishing {
 	publications {
 		maven(MavenPublication) {
 			from(components.java)
+			pom {
+				url = "https://github.com/css4j/carte/wiki"
+				licenses {
+					license {
+						name = "BSD 2-clause license"
+						url = "https://raw.githubusercontent.com/css4j/carte/refs/heads/master/LICENSE.txt"
+					}
+				}
+				scm {
+					connection = "scm:git:https://github.com/css4j/carte.git"
+					developerConnection = "scm:git:git://git@github.com:css4j/carte.git"
+					url = "https://github.com/css4j/carte"
+				}
+			}
 			suppressAllPomMetadataWarnings()
+		}
+	}
+	repositories {
+		maven {
+			name = 'mavenRepo'
+			/*
+			 * The following section applies to the 'publish' task:
+			 *
+			 * If you plan to deploy to a repository, please configure the
+			 * 'mavenReleaseRepoUrl' and/or 'mavenSnapshotRepoUrl' properties
+			 * (for example in GRADLE_USER_HOME/gradle.properties).
+			 *
+			 * Otherwise, Gradle shall create a 'build/repository' subdirectory
+			 * at ${rootDir} and deploy there.
+			 *
+			 * Properties 'mavenRepoUsername' and 'mavenRepoPassword' can also
+			 * be set (generally from command line).
+			 */
+			def releasesUrl
+			def snapshotsUrl
+			if (project.hasProperty('mavenReleaseRepoUrl') && project.mavenReleaseRepoUrl) {
+				releasesUrl = mavenReleaseRepoUrl
+			} else {
+				releasesUrl = "${buildDir}/repository/releases"
+			}
+			if (project.hasProperty('mavenSnapshotRepoUrl') && project.mavenSnapshotRepoUrl) {
+				snapshotsUrl = mavenSnapshotRepoUrl
+			} else {
+				snapshotsUrl = "${buildDir}/repository/snapshots"
+			}
+			url = version.endsWith('-SNAPSHOT') ? snapshotsUrl : releasesUrl
+			if (project.hasProperty('mavenRepoUsername') &&
+					project.hasProperty('mavenRepoPassword')) {
+				credentials.username = mavenRepoUsername
+				credentials.password = mavenRepoPassword
+			}
 		}
 	}
 }
